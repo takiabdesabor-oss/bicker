@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produit Maroc</title>
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  transition: background 0.3s;
+}
+.container{
+  max-width:500px;
+  margin:auto;
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  margin-top:20px;
+}
+.hidden{display:none}
+.product-img{
+  height:250px;
+  background:#ddd;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+label{
+  font-weight:bold;
+  margin-top:10px;
+  display:block;
+}
+input,select,textarea,button{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:8px;
+  border:1px solid #ccc;
+}
+button{
+  background:#25D366;
+  color:white;
+  font-size:16px;
+  border:none;
+  margin-top:15px;
+}
+.top-buttons{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+.small-btn{
+  flex:1;
+  background:#333;
+  font-size:14px;
+}
+.ar{
+  direction:rtl;
+  text-align:right;
+}
+footer{
+  text-align:center;
+  font-size:14px;
+  color:#666;
+  margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- TOP BUTTONS -->
+<div class="top-buttons">
+  <button class="small-btn" onclick="setLang('fr')">FR</button>
+  <button class="small-btn" onclick="setLang('ar')">AR</button>
+  <button class="small-btn" onclick="changeBg()">🎨</button>
+</div>
+
+<!-- FRENCH -->
+<div id="fr">
+<h2>Nom du produit</h2>
+
+<img src="product.jpg" class="product-img" alt="Produit">
+
+
+<p>Produit de qualité avec livraison rapide au Maroc.</p>
+<p><strong>Prix :</strong> 199 MAD</p>
+
+<label>Quantité</label>
+<input type="number" id="qty" value="1" min="1">
+
+<label>Ville</label>
+<select id="city">
+  <option>Casablanca</option>
+  <option>Rabat</option>
+  <option>Marrakech</option>
+  <option>Tanger</option>
+  <option>Fès</option>
+  <option>Agadir</option>
+</select>
+
+<label>Téléphone</label>
+<input id="phone" placeholder="+2126xxxxxxxx">
+
+<label>Adresse</label>
+<textarea id="address"></textarea>
+
+<button onclick="order()">Commander via WhatsApp</button>
+</div>
+
+<!-- ARABIC -->
+<div id="ar" class="hidden ar">
+<h2>اسم المنتج</h2>
+
+<img src="product.jpg" class="product-img" alt="Produit">
+
+<p>منتج عالي الجودة مع توصيل سريع داخل المغرب.</p>
+<p><strong>السعر:</strong> 199 درهم</p>
+
+<label>الكمية</label>
+<input type="number" id="qty_ar" value="1" min="1">
+
+<label>المدينة</label>
+<select id="city_ar">
+  <option>الدار البيضاء</option>
+  <option>الرباط</option>
+  <option>مراكش</option>
+  <option>طنجة</option>
+  <option>فاس</option>
+  <option>أكادير</option>
+</select>
+
+<label>رقم الهاتف</label>
+<input id="phone_ar" placeholder="06XXXXXXXX">
+
+<label>العنوان</label>
+<textarea id="address_ar"></textarea>
+
+<button onclick="order()">اطلب عبر واتساب</button>
+</div>
+
+<footer>
+الدفع عند الاستلام – Livraison au Maroc
+</footer>
+
+</div>
+
+<script>
+const SHOP_WA = "+212639770203"; // CHANGE NUMBER
+
+function setLang(lang){
+  document.getElementById("fr").classList.toggle("hidden", lang !== "fr");
+  document.getElementById("ar").classList.toggle("hidden", lang !== "ar");
+}
+
+const colors = ["#f2f2f2","#fff4e6","#e6f7ff","#f0e6ff","#e6ffe6"];
+let c = 0;
+function changeBg(){
+  c = (c + 1) % colors.length;
+  document.body.style.background = colors[c];
+}
+
+function order(){
+  const qty = document.getElementById("qty")?.value || document.getElementById("qty_ar").value;
+  const city = document.getElementById("city")?.value || document.getElementById("city_ar").value;
+  const phone = document.getElementById("phone")?.value || document.getElementById("phone_ar").value;
+  const address = document.getElementById("address")?.value || document.getElementById("address_ar").value;
+
+  let msg =
+  "🛍️ Commande / طلب\n" +
+  "Produit: Nom du produit\n" +
+  "Quantité: " + qty + "\n" +
+  "Ville: " + city + "\n" +
+  "Téléphone: " + phone + "\n" +
+  "Adresse: " + address + "\n" +
+  "Paiement: عند الاستلام";
+
+  window.open("https://wa.me/" + SHOP_WA + "?text=" + encodeURIComponent(msg), "_blank");
+}
+</script>
+
+</body>
+</html>
